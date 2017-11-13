@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<congfig>
+    <modules>
+        <My_Statistic>
+            <active>true</active>
+            <codePool>local</codePool>
+        </My_Statistic>
+    </modules>
+</congfig>

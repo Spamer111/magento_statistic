@@ -1,0 +1,254 @@
+<?php
+//var_dump(Mage::registry('statistic_country')->getContinent());
+//var_dump(Mage::registry('statistic_ipaddresses'));
+//var_dump(Mage::registry('statistic_visits')->getVisitTime());
+//var_dump($_SERVER);
+$lat = '53.905225';
+$lon = '30.335143';
+//$lat = '0';
+//$lon = '0';
+//var_dump(Mage::registry('statistic_country')->getLat());
+//var_dump( Mage::registry('statistic_country')->getLon());
+//var_dump($_COOKIE);
+//var_dump($_GET);
+//var_dump($this->getUrl('*/*/view', array('visit_id' => 111)));
+
+//time_spent_on_site
+
+?>
+    <button type="button" title="<?php echo $this->__('Back') ?>" class="button" onClick='location.href="<?php echo $this->getUrl("adminhtml/visitors/index") ?>"'>
+        <span>
+            <span>
+                <?php echo $this->__('Back') ?>
+            </span>
+        </span>
+    </button>
+
+
+<button type="button" title="<?php echo $this->__('< Previous ID') ?>" class="button" onClick='location.href="<?php echo $this->getUrl('*/*/view', array('visit_id' => Mage::registry('prev_id'))) ?>"'>
+    <span>
+        <span>
+            <?php echo $this->__('< Previous ID') ?>
+        </span>
+    </span>
+</button>
+
+<button type="button" title="<?php echo $this->__('Next ID >') ?>" class="button" onClick='location.href="<?php echo $this->getUrl('*/*/view', array('visit_id' => Mage::registry('next_id'))) ?>"'>
+    <span>
+        <span>
+            <?php echo $this->__('Next ID >') ?>
+        </span>
+    </span>
+</button>
+
+
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-dashboard"><?php echo $this->__("Информация о посетителе!") ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="dashboard-container">
+    <table cellspacing="25" width="100%">
+        <tr>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('ID Посетителя') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getId();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Дата посещения') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getVisitDate();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Время посещения') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getVisitTime();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Время проведенное на сайте') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('time_spent_on_site');?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('ОС') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getSysString();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Полное название ОС') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getSysFullname();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Название браузера') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getBrowserName();?></fieldset>
+                </div>
+            </td>
+
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Версия браузера') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_visits')->getBrowserVersion();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Континент') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_country')->getContinent();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Страна') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_country')->getCountryNameEn();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Город') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_country')->getCityNameEn();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('IP пользователя') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_ipaddresses')->getIp();?></fieldset>
+                </div>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('IP сервера') ?></h4></div>
+                    <fieldset class="np"><?php echo Mage::registry('statistic_ipaddresses')->getIpServer();?></fieldset>
+                </div>
+
+            </td>
+
+            <td>
+                <div class="entry-edit" style="border:1px solid #ccc;">
+                    <div style="margin:20px;">
+                        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+                        <div style='overflow:hidden;height:440px;width:700px;'>
+                            <div id='gmap_canvas' style='height:440px;width:700px;'></div>
+                            <div><small><a href="http://embedgooglemaps.com">embedgooglemaps.com</a></small></div>
+                            <div><small><a href="http://www.genkigirl.net/">cheap website traffic</a></small></div>
+                            <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+                        </div>
+                        <script type='text/javascript'>
+                            function init_map(){
+                                var myOptions = {
+                                    zoom:10,
+                                    center:new google.maps.LatLng(<?php echo Mage::registry('statistic_country')->getLat();?>,<?php echo Mage::registry('statistic_country')->getLon();?>), /*Вставить координаты из базы*/
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                                };
+                                map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+                                marker = new google.maps.Marker({
+                                    map: map,
+                                    position: new google.maps.LatLng(<?php echo Mage::registry('statistic_country')->getLat();?>,<?php echo Mage::registry('statistic_country')->getLon();?>) /*Вставить координаты из базы*/
+                                });
+                                infowindow = new google.maps.InfoWindow({
+                                    content:'<strong>Название</strong><br><?php echo Mage::registry('statistic_country')->getCityNameEn();?>, <?php echo Mage::registry('statistic_country')->getCountryNameEn();?><br>' /*Вставить город и страну из базы*/
+                                });
+                                google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});
+                                infowindow.open(map,marker);
+                            }
+                            google.maps.event.addDomListener(window, 'load', init_map);
+                        </script>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3 class="head-dashboard"><?php echo $this->__("Карта переходов") ?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="dashboard-container">
+    <table width="100%">
+
+        <tr>
+            <td>
+            <div class="entry-edit">
+                <div class="entry-edit-head"><h4><?php echo $this->__('№') ?></h4></div>
+            </div>
+            </td>
+            <td>
+                <div class="entry-edit">
+                <div class="entry-edit-head"><h4><?php echo $this->__('Referrer') ?></h4></div>
+                </div>
+            </td>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Ссылка') ?></h4></div>
+                </div>
+            </td>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Заголовок страницы') ?></h4></div>
+                </div>
+            </td>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Дата') ?></h4></div>
+                </div>
+            </td>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Время посещения') ?></h4></div>
+                </div>
+            </td>
+            <td>
+                <div class="entry-edit">
+                    <div class="entry-edit-head"><h4><?php echo $this->__('Время на странице') ?></h4></div>
+                </div>
+            </td>
+        </tr>
+
+        <?php $t =''; foreach (Mage::registry('statistic_visits_page') as $key=>$value):?>
+            <tr>
+                <td>
+                    <div class="entry-edit">
+                        <?php echo $key;?>
+                    </div>
+                </td>
+                <td>
+                    <div class="entry-edit">
+                        <a href="<?php echo $value['referrer']?>"><?php echo mb_strimwidth($value['referrer'],0,40,"...")?></a>
+                    </div>
+                </td>
+                <td>
+                    <div class="entry-edit">
+                        <a href="<?php echo $value['page']?>"><?php echo mb_strimwidth($value['page'],0,40,"...")?></a>
+                    </div>
+                </td>
+                <td>
+                    <div class="entry-edit">
+                        <?php echo $value['page_title']?>
+                    </div>
+                </td>
+                <td>
+                    <div class="entry-edit">
+                        <?php echo $value['visit_date']?>
+                    </div>
+                </td>
+                <td>
+                    <div class="entry-edit">
+                        <?php echo $value['visit_time']?>
+                    </div>
+                </td>
+                <td>
+                    <div class="entry-edit">
+                        <?php
+                            $time1 = date_create($value['visit_time']);
+                            $time2 = date_create(Mage::registry('statistic_visits_page')[$key+1]['visit_time']);
+                            $interval = date_diff($time2, $time1);
+                            if(!Mage::registry('statistic_visits_page')[$key+1]==null){
+                                $interval = date_diff($time2, $time1);
+                                $t =$t +strtotime($interval->format('%H:%I:%S'));
+                                echo $interval->format('%H:%I:%S');
+                            }else {
+                                echo "Пользователь покинул сайт";
+                                break;
+                            }
+                        ?>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach;
+        //echo '!'.date('H:i:s',$t).'!';
+        ?>
+    </table>
+
+</div>

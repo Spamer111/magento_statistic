@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <My_Statistic>
+            <version>1.0.7</version>
+        </My_Statistic>
+    </modules>
+    <global>
+        <blocks>
+            <statistic>
+                <class>My_Statistic_Block</class>
+            </statistic>
+        </blocks>
+        <!-- Тут будут модели, блоки, хелперы, реврайты, глобальные обсерверы -->
+        <models>
+            <statistic> <!-- Как правило тут namespace_modulename или просто modulename -->
+                <class>My_Statistic_Model</class>
+                <resourceModel>statistic_resource</resourceModel>
+            </statistic>
+            <statistic_resource>
+                <class>My_Statistic_Model_Resource</class>
+                <entities>
+                    <visits> <!-- наименование модели -->
+                        <table>my_stats_visits</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    </visits>
+
+                    <country> <!-- наименование модели -->
+                        <table>my_stats_country</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    </country>
+
+                    <ipaddresses> <!-- наименование модели -->
+                        <table>my_stats_ipaddresses</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    </ipaddresses>
+
+                    <pages> <!-- наименование модели -->
+                        <table>my_stats_pages</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    </pages>
+
+                    <pagevisit> <!-- наименование модели -->
+                        <table>my_stats_page_visit</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    </pagevisit>
+
+                </entities>
+            </statistic_resource>
+        </models>
+
+        <resources>
+            <statistic_setup> <!-- именно в папку с таким названием нужно складывать install и upgrade скрипты -->
+                <setup>
+                    <module>My_Statistic</module>
+                </setup>
+            </statistic_setup>
+        </resources>
+
+        <helpers>
+            <statistic>
+                <class>My_Statistic_Helper</class>
+            </statistic>
+        </helpers>
+
+    </global>
+
+    <frontend>
+        <events>
+            <controller_action_predispatch><!--Событие -->
+                <observers>
+                    <!--Перечисляем слушателей-->
+                    <visitor><!--Произвольное название слушателя-->
+                        <class>statistic/visits</class><!--Класс /Model/observer-->
+                        <method>controller_action_predispatch</method> <!--Метод который будет вызываться в обсервере при событии, описан в классе-->
+                        <type>singleton</type>
+                    </visitor>
+                </observers>
+            </controller_action_predispatch>
+
+            <controller_front_send_response_after>
+                <observers>
+                    <page_visits><!--Произвольное название слушателя-->
+                        <class>statistic/pages</class><!--Класс /Model/observer-->
+                        <method>controller_front_send_response_after</method> <!--Метод который будет вызываться в обсервере при событии, описан в классе-->
+                        <type>singleton</type>
+                    </page_visits>
+                </observers>
+            </controller_front_send_response_after>
+        </events>
+        <!-- Все касательно frontend части магазина: роуты, макеты, переводы, обсерверы -->
+
+        <routers>
+            <statistic>
+                <use>standard</use>
+                <args>
+                    <module>My_Statistic</module>
+                    <frontName>statistic</frontName><!-- любое название, не конфликтуйте с существующими роутерами -->
+                </args>
+            </statistic>
+        </routers>
+    </frontend>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <statistic before="Mage_Adminhtml">My_Statistic_Adminhtml</statistic>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <statistic module="statistic">
+                    <file>mystatistic.xml</file>
+                </statistic>
+            </updates>
+        </layout>
+        <!-- Все касательно admin части магазина:  макеты, переводы, обсерверы -->
+    </adminhtml>
+
+    <default>
+        <!-- Все касательно admin части магазина:  макеты, переводы, обсерверы -->
+    <statistic>
+        <settings>
+            <enabled>1</enabled>
+            <block_count>10</block_count>
+        </settings>
+    </statistic>
+    </default>
+</config>
