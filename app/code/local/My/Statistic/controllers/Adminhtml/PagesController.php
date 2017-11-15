@@ -1,125 +1,75 @@
 <?php
 
 class My_Statistic_Adminhtml_PagesController extends Mage_Adminhtml_Controller_Action {
+   // public $a;
 
     public function indexAction()
     {
-
         date_default_timezone_set('Europe/Moscow'); // установим временную зону
         $collection = Mage::getModel('statistic/visits');
         $collection_country = Mage::getModel('statistic/country');
         //
+        // Данные для графика %
         //
-        // Данные для графика % континентов
-        //
-        //
-        $collection_country_continent = $collection_country->getCollection();
-        $continent_all = array();
-        foreach ($collection_country_continent as $v){
-            $continent_all[]=$v['continent']; // Получаем список всех континентов
-        }
-        $continent=array_unique($continent_all); // уникальные записи континентов
-        $count_continent = array(); // количество записи каждого континента
-        foreach ($continent as $v){
-            $count_continent[] = count($collection_country -> getCollection()-> addFieldToFilter('continent',array('eq'=>$v)));
-        }
-        $all_zp = count($collection_country->getCollection()); // считаем сколько всего записей -100%
-        $percent_con = array(); // % от общего количества каждого континента
-        foreach ($count_continent as $v) {
-            $percent_con[] = round($v/$all_zp*100,2);
-        }
-        $continent_data = implode(",",$percent_con); // строка с % для заполнения диаграммы
-        $continent_legend = "'".implode("','",$continent)."'"; // строка с легендой
-        $continent_rgba = '';
-        foreach ($continent as $v) {
-            $continent_rgba = "'rgba(".rand(0,255).",".rand(0,255).",".rand(0,255).",0.5)',".$continent_rgba;// строка с цветовой заливкой
-        }
-        //
-        //
-        // Данные для графика % стран
-        //
-        //
-        $collection_country_country_name = $collection_country->getCollection();
-        $country_name_all = array();
-        foreach ($collection_country_country_name as $v){
-            $country_name_all[] =  $v['country_name_en'];
-        }
-        $country=array_unique($country_name_all); // уникальные записи континентов
-        $country_key = array();
-        foreach ($country as $value){
-            $country_key[] = $value;
-        }
-        $count_country = array();
-        foreach ($country as $v){
-            $count_country[] = count($collection_country -> getCollection()-> addFieldToFilter('country_name_en',array('eq'=>$v)));
-        }
-        $country_data_map ='';
-        foreach ($country_key as $key => $value) {
-            $country_data_map = "['".$value."','".$value.": ".$count_country[$key]."'],".$country_data_map;
-        }
-        $all_zp = count($collection_country->getCollection()); // считаем сколько всего записей -100%
-        $percent_country = array();
-        foreach ($count_country as $v) {
-            $percent_country[] = round($v/$all_zp*100,2);
-        }
-        $country_data = implode(",",$percent_country); // строка с % для заполнения диаграммы
-        $country_legend = "'".implode("','",$country)."'"; // строка с легендой
-        $country_rgba = '';
-        foreach ($country as $v) {
-            $country_rgba = "'rgba(".rand(0,255).",".rand(0,255).",".rand(0,255).",0.5)',".$country_rgba;// строка с цветовой заливкой
-        }
-        //
-        //
-        // Данные для графика % браузеров
-        //
-        //
-        $browser_collection = $collection->getCollection();// массив со всеми элементами таблицы
-        $browser_all = array();
-        foreach ($browser_collection as $v){
-            $browser_all[] = $v['browser_name'];// делаем массив состоящий только из названия браузеров
-        }
-        $browser=array_unique($browser_all); // массив из представленных браузеров
-        $count_browser = array(); // количество вхождений браузеров в бд
-        foreach ($browser as $v){
-            $count_browser[] = count($collection -> getCollection()-> addFieldToFilter('browser_name',array('eq'=>$v)));
-        }
-        $all = array_sum($count_browser); // считаем сколько всего записей -100%
-        $percent = array(); // процент каждого браузера из общего числа
-        foreach ($count_browser as $v) {
-            $percent[] = round($v/$all*100,2);// процент каждого браузера из общего числа
-        }
-        $data = implode(",",$percent); // строка с % для заполнения диаграммы
+        $data = '';
+        $legend = '';
         $rgba = '';
-        $legend_browser = "'".implode("','",$browser)."'"; // строка с легендой браузеров
-        foreach ($percent as $v) {
-            $rgba = "'rgba(".rand(0,255).",".rand(0,255).",".rand(0,255).",0.5)',".$rgba;// строка с цветовой заливкой
-        }
-        //
-        //
-        // Данные для графика % ОС
-        //
-        //
-        $os_collection = $collection->getCollection();// массив со всеми элементами таблицы
-        $os_all = array();
-        foreach ($os_collection as $v){
-            $os_all[] = $v['sys_fullname'];
-        }
-        $os=array_unique($os_all); // массив из представленных браузеров
-        $legend_os = "'".implode("','",$os)."'"; // строка с легендой ос
-        $count_os = array(); // количество вхождений браузеров в бд
-        foreach ($os as $v){
-            $count_os[] = count($collection ->getCollection()-> addFieldToFilter('sys_fullname',array('eq'=>$v)));
-        }
-        $allOs = array_sum($count_os); // считаем сколько всего записей -100%
-        $percent_os = array(); // процент каждого браузера из общего числа
-        foreach ($count_os as $v) {
-            $percent_os[] = round($v/$allOs*100,2);
-        }
-        $data_os = implode(",",$percent_os); // строка с % для заполнения диаграммы
-        $rgba_os = '';
-        foreach ($percent_os as $v) {
-            $rgba_os = "'rgba(".rand(0,255).",".rand(0,255).",".rand(0,255).",0.5)',".$rgba_os;// строка с цветовой заливкой
-        }
+        $country_data_map = '';
+
+        $pie_chart = function ($collection,$chart) use (&$data, &$legend, &$rgba, &$country_data_map){
+            $collection_chart = $collection->getCollection();// Получаем колекцию
+            $all_record = array();
+            foreach ($collection_chart as $v){
+                $all_record[]=$v[$chart]; // Получаем список всех записей
+            }
+            $unique_record=array_unique($all_record); // уникальные записи
+            $quantity_unique_record = array(); // количество каждой уникальной записи в бд
+            foreach ($unique_record as $v){
+                $quantity_unique_record[] = count($collection->getCollection()-> addFieldToFilter($chart,array('eq'=>$v)));
+            }
+            $all_quantity = count($collection_chart); // считаем сколько всего записей -100%
+            $percent_unique_record = array(); // % уникальных записей от общего числа
+            foreach ($quantity_unique_record as $v) {
+                $percent_unique_record[] = round($v/$all_quantity*100,2);
+            }
+            $data = implode(",",$percent_unique_record); // строка с % для заполнения диаграммы
+            $legend = "'".implode("','",$unique_record)."'"; // строка с легендой
+            $rgba = '';
+            foreach ($unique_record as $v) {
+                $rgba = "'rgba(".rand(0,255).",".rand(0,255).",".rand(0,255).",0.5)',".$rgba;// строка с цветовой заливкой
+            }
+            if($chart == 'country_name_en'){
+                $country_key = array();
+                foreach ($unique_record as $value){
+                    $country_key[] = $value;
+                }
+                $country_data_map ='';
+                foreach ($country_key as $key => $value) {
+                    $country_data_map = "['".$value."','".$value.": ".$quantity_unique_record[$key]."'],".$country_data_map;
+                }
+            }
+        };
+
+        $pie_chart($collection_country,'continent');
+        Mage::register('continent_data', $data);
+        Mage::register('continent_legend', $legend);
+        Mage::register('continent_rgba', $rgba);
+
+        $pie_chart($collection,'browser_name');
+        Mage::register('data', $data);
+        Mage::register('legend_browser', $legend);
+        Mage::register('rgba', $rgba);
+
+        $pie_chart($collection,'sys_fullname');
+        Mage::register('data_os', $data);
+        Mage::register('legend_os', $legend);
+        Mage::register('rgba_os', $rgba);
+
+        $pie_chart($collection_country,'country_name_en');
+        Mage::register('country_data', $data);
+        Mage::register('country_legend', $legend);
+        Mage::register('country_rgba', $rgba);
+        Mage::register('country_data_map', $country_data_map);
 
         //
         //
@@ -267,22 +217,9 @@ class My_Statistic_Adminhtml_PagesController extends Mage_Adminhtml_Controller_A
         Mage::register('month_str', $month_str);
         Mage::register('month_label', $month_label);
         Mage::register('month_num', $month_num);
-        Mage::register('data', $data);
-        Mage::register('rgba', $rgba);
-        Mage::register('data_os', $data_os);
-        Mage::register('rgba_os', $rgba_os);
-        Mage::register('legend_browser', $legend_browser);
-        Mage::register('legend_os', $legend_os);
         Mage::register('month_legend', $month_legend);
         Mage::register('day_data', $day_data);
         Mage::register('day_legend', $day_legend);
-        Mage::register('continent_data', $continent_data);
-        Mage::register('continent_legend', $continent_legend);
-        Mage::register('continent_rgba', $continent_rgba);
-        Mage::register('country_data', $country_data);
-        Mage::register('country_legend', $country_legend);
-        Mage::register('country_rgba', $country_rgba);
-        Mage::register('country_data_map', $country_data_map);
 
         // создаем свой блок для вывода
         $this->loadLayout();
