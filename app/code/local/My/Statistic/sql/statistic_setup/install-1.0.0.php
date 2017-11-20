@@ -57,7 +57,7 @@ $installer->run("
       `useragent` varchar(255) default NULL, /*вся строка*/
       `system` varchar(50) NOT NULL default '-', /*ОС*/
       `browser` varchar(50) NOT NULL default '-', /*браузер*/
-       PRIMARY KEY (id)
+       PRIMARY KEY (id),
     ) 
     ENGINE=InnoDB CHARSET=utf8 COLLATE utf8_unicode_ci;
     ");

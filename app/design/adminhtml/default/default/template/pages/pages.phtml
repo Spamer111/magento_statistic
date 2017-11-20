@@ -101,7 +101,7 @@
 </div>
 
 
-<h3>% браузеров посетителей</h3>
+<!-- % браузеров посетителей -->
 <div class="dashboard-container" style="border:1px solid #ccc; width:550px;height:550px;padding:5px">
     <canvas id="myBrowser" width="400" height="400"></canvas>
     <script>
@@ -111,11 +111,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo Mage::registry('data')?>],
-                        backgroundColor: [<?php echo Mage::registry('rgba');?>]
+                        data: [<?php echo $this->browserData;?>],
+                        backgroundColor: [<?php echo $this->browserRgba;?>]
                     }
                 ],
-                labels: [<?php echo Mage::registry('legend_browser');?>]
+                labels: [<?php echo $this->browserLegend;?>]
             },
             options: {
                 layout: {
@@ -141,6 +141,7 @@
     </script>
 </div>
 
+<!--% ОС посетителей-->
 <div class="dashboard-container" style="border:1px solid #ccc; width:550px;height:550px;padding:5px">
     <canvas id="myOS" width="400" height="400"></canvas>
     <script>
@@ -150,11 +151,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo Mage::registry('data_os');?>],
-                        backgroundColor: [<?php echo Mage::registry('rgba_os');?>]
+                        data: [<?php echo $this->osData;?>],
+                        backgroundColor: [<?php echo $this->osRgba;?>]
                     }
                 ],
-                labels: [<?php echo Mage::registry('legend_os');?>]
+                labels: [<?php echo $this->osLegend;?>]
             },
             options: {
                 layout: {
@@ -179,6 +180,7 @@
     </script>
     </div>
 
+<!-- % континентов посетителей -->
 <div class="dashboard-container" style="border:1px solid #ccc; width:550px;height:550px;padding:5px">
     <canvas id="myContonents" width="400" height="400"></canvas>
     <script>
@@ -188,11 +190,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo Mage::registry('continent_data');?>],
-                        backgroundColor: [<?php echo Mage::registry('continent_rgba');?>]
+                        data: [<?php echo $this->continentData; ?>],
+                        backgroundColor: [<?php echo $this->continentRgba;?>]
                     }
                 ],
-                labels: [<?php echo Mage::registry('continent_legend');?>]
+                labels: [<?php echo $this->continentLegend;?>]
             },
             options: {
                 layout: {
@@ -227,7 +229,7 @@
         var data = google.visualization.arrayToDataTable([
             ['Country', 'Visitors'],
             <?php
-                echo Mage::registry('country_data_map');
+                echo $this->countryDataMaps;
             ?>
         ]);
         var options = {
@@ -249,11 +251,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo Mage::registry('country_data');?>],
-                        backgroundColor: [<?php echo Mage::registry('country_rgba');?>]
+                        data: [<?php echo $this->countryData;?>],
+                        backgroundColor: [<?php echo $this->countryRgba;?>]
                     }
                 ],
-                labels: [<?php echo Mage::registry('country_legend');?>]
+                labels: [<?php echo $this->countryLegend;?>]
             },
             options: {
                 layout: {
@@ -295,9 +297,9 @@
             var my_chart = new Chart(my_chart_canvas, {
                 type: 'bar',
                 data: {
-                    labels: [<?php echo Mage::registry('month_legend');?>],
+                    labels: [<?php echo $this->monthLegend;?>],
                     datasets: [<?php
-                        foreach (Mage::registry('data_year_gist') as $value) {
+                        foreach ($this->dataYearGist as $value) {
                             echo $value;
                         }?>]
                 },
@@ -336,7 +338,7 @@
 
     <form class="my_month_line_form_class" name="my_month_line_form_name" id="my_month_line_form_id" method="post" >
         <select multiple name="my_month[]">
-            <?php foreach (Mage::registry('month_label') as $key=>$value):?>
+            <?php foreach ($this->month as $key=>$value):?>
                 <option value = "<?php echo $key?>"><?php echo $value?></option>
             <?php endforeach;?>
         </select>
@@ -351,8 +353,8 @@
         var my_chart = new Chart(my_chart_canvas, {
             type: 'line',
             data: {
-                labels: [<?php echo Mage::registry('day_legend');?>],
-                datasets: [<?php foreach (Mage::registry('day_data') as $value){echo $value;}?>]
+                labels: [<?php echo $this->dayLegend;?>],
+                datasets: [<?php foreach ($this->dayData as $value){echo $value;}?>]
             },
             options: {
                 scales: {
