@@ -13,7 +13,6 @@ class My_Statistic_Model_Visits extends Mage_Core_Model_Abstract
 
     public function controller_action_predispatch($observer)
     {
-        date_default_timezone_set('Europe/Moscow'); // установим временную зону
         $curdate = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
         $nextday = mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"));
         setcookie("lastvisit", $curdate, $nextday);

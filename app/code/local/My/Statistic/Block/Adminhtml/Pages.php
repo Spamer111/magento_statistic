@@ -191,11 +191,11 @@ class My_Statistic_Block_Adminhtml_Pages extends Mage_Adminhtml_Block_Template{
     {
         parent::__construct();
         $collection = Mage::getModel('statistic/visits');
-        $collection_country = Mage::getModel('statistic/country');
-        $this->continentChart = $this->pieChart($collection_country,'continent');
+        $collectionCountry = Mage::getModel('statistic/country');
+        $this->continentChart = $this->pieChart($collectionCountry,'continent');
         $this->browserChart = $this->pieChart($collection,'browser_name');
         $this->osChart = $this->pieChart($collection,'browser_name');
-        $this->countryChart = $this->pieChart($collection_country,'country_name_en');
+        $this->countryChart = $this->pieChart($collectionCountry,'country_name_en');
         $this->histogramChart = $this->histogramByMonth($collection);
         $this->visitsByDayChart = $this->chartVisitsByDay($collection);
         $this->period = $this->visitsForPeriod($collection);
