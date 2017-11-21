@@ -1,4 +1,7 @@
+<?php
 
+
+?>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <div class="content-header">
     <table cellspacing="0">
@@ -14,42 +17,42 @@
         <td>
             <div class="entry-edit">
                 <div class="entry-edit-head"><h4><?php echo $this->__('Всего') ?></h4></div>
-                <fieldset class="np"><?php echo Mage::registry('allvisits');?></fieldset>
+                <fieldset class="np"><?php echo $this->generalStatistics['allVisits'];?></fieldset>
             </div>
         </td>
 
         <td>
             <div class="entry-edit">
                 <div class="entry-edit-head"><h4><?php echo $this->__('Год') ?></h4></div>
-                <fieldset class="np"><?php echo Mage::registry('year');?></fieldset>
+                <fieldset class="np"><?php echo $this->generalStatistics['year'];?></fieldset>
             </div>
         </td>
 
         <td>
             <div class="entry-edit">
                 <div class="entry-edit-head"><h4><?php echo $this->__('Месяц') ?></h4></div>
-                <fieldset class="np"><?php echo Mage::registry('month');?></fieldset>
+                <fieldset class="np"><?php echo $this->generalStatistics['month'];?></fieldset>
             </div>
         </td>
 
         <td>
             <div class="entry-edit">
                 <div class="entry-edit-head"><h4><?php echo $this->__('День') ?></h4></div>
-                <fieldset class="np"><?php echo Mage::registry('day');?></fieldset>
+                <fieldset class="np"><?php echo $this->generalStatistics['day'];?></fieldset>
             </div>
         </td>
 
         <td>
             <div class="entry-edit">
                 <div class="entry-edit-head"><h4><?php echo $this->__('Час') ?></h4></div>
-                <fieldset class="np"><?php echo Mage::registry('hour');?></fieldset>
+                <fieldset class="np"><?php echo $this->generalStatistics['hour'];?></fieldset>
             </div>
         </td>
 
         <td>
             <div class="entry-edit">
                 <div class="entry-edit-head"><h4><?php echo $this->__('Минута') ?></h4></div>
-                <fieldset class="np"><?php echo Mage::registry('minute');?></fieldset>
+                <fieldset class="np"><?php echo $this->generalStatistics['minute'];?></fieldset>
             </div>
         </td>
 
@@ -84,7 +87,7 @@
                             <input name="form_key" type="hidden" value="<?php echo $this->getFormKey() ?>" id="form_key"/>
                             <button id="enter">Enter</button>
                         </form>
-                        <?php echo Mage::registry('period');?>
+                        <?php echo $this->period;?>
                     </fieldset>
                 </div>
             </div>
@@ -111,11 +114,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo $this->browserData;?>],
-                        backgroundColor: [<?php echo $this->browserRgba;?>]
+                        data: [<?php echo $this->browserChart['data'];?>],
+                        backgroundColor: [<?php echo $this->browserChart['rgba'];?>]
                     }
                 ],
-                labels: [<?php echo $this->browserLegend;?>]
+                labels: [<?php echo $this->browserChart['legend'];?>]
             },
             options: {
                 layout: {
@@ -141,6 +144,7 @@
     </script>
 </div>
 
+
 <!--% ОС посетителей-->
 <div class="dashboard-container" style="border:1px solid #ccc; width:550px;height:550px;padding:5px">
     <canvas id="myOS" width="400" height="400"></canvas>
@@ -151,11 +155,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo $this->osData;?>],
-                        backgroundColor: [<?php echo $this->osRgba;?>]
+                        data: [<?php echo $this->osChart['data'];?>],
+                        backgroundColor: [<?php echo $this->osChart['rgba'];?>]
                     }
                 ],
-                labels: [<?php echo $this->osLegend;?>]
+                labels: [<?php echo $this->osChart['legend'];?>]
             },
             options: {
                 layout: {
@@ -180,6 +184,7 @@
     </script>
     </div>
 
+
 <!-- % континентов посетителей -->
 <div class="dashboard-container" style="border:1px solid #ccc; width:550px;height:550px;padding:5px">
     <canvas id="myContonents" width="400" height="400"></canvas>
@@ -190,11 +195,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo $this->continentData; ?>],
-                        backgroundColor: [<?php echo $this->continentRgba;?>]
+                        data: [<?php echo $this->continentChart['data']; ?>],
+                        backgroundColor: [<?php echo $this->continentChart['rgba'];?>]
                     }
                 ],
-                labels: [<?php echo $this->continentLegend;?>]
+                labels: [<?php echo $this->continentChart['legend'];?>]
             },
             options: {
                 layout: {
@@ -219,6 +224,7 @@
     </script>
 </div>
 
+
 <!-- Карта гугл -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
@@ -229,7 +235,7 @@
         var data = google.visualization.arrayToDataTable([
             ['Country', 'Visitors'],
             <?php
-                echo $this->countryDataMaps;
+                echo $this->countryChart['countryDataMap'];
             ?>
         ]);
         var options = {
@@ -242,6 +248,7 @@
 </script>
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
 
+
 <div class="dashboard-container" style="border:1px solid #ccc; width:550px;height:550px;padding:5px">
     <canvas id="myСountry" width="400" height="400"></canvas>
     <script>
@@ -251,11 +258,11 @@
             data: {
                 datasets: [
                     {
-                        data: [<?php echo $this->countryData;?>],
-                        backgroundColor: [<?php echo $this->countryRgba;?>]
+                        data: [<?php echo $this->countryChart['data'];?>],
+                        backgroundColor: [<?php echo $this->countryChart['rgba'];?>]
                     }
                 ],
-                labels: [<?php echo $this->countryLegend;?>]
+                labels: [<?php echo $this->countryChart['legend'];?>]
             },
             options: {
                 layout: {
@@ -283,7 +290,7 @@
     <div class="dashboard-container" style="border:1px solid #ccc; width:700px;padding:5px">
         <canvas id="myYear"></canvas>
         <form class="my_year_bar_form_class" name="my_year_bar_form_name" id="my_year_bar_form_id" method="post" >
-            <select multiple name="my_year[]">
+            <select multiple name="myYear[]">
                 <?php for ($i = 2016; $i <= 2027; $i++):?>
                         <option value = "<?php echo $i?>"><?php echo $i?></option>
                 <?php endfor;?>
@@ -297,9 +304,9 @@
             var my_chart = new Chart(my_chart_canvas, {
                 type: 'bar',
                 data: {
-                    labels: [<?php echo $this->monthLegend;?>],
+                    labels: [<?php echo $this->histogramChart['monthLegend'];?>],
                     datasets: [<?php
-                        foreach ($this->dataYearGist as $value) {
+                        foreach ($this->histogramChart['dataYearGist'] as $value) {
                             echo $value;
                         }?>]
                 },
@@ -353,8 +360,8 @@
         var my_chart = new Chart(my_chart_canvas, {
             type: 'line',
             data: {
-                labels: [<?php echo $this->dayLegend;?>],
-                datasets: [<?php foreach ($this->dayData as $value){echo $value;}?>]
+                labels: [<?php echo $this->visitsByDayChart['dayLegend'];?>],
+                datasets: [<?php foreach ($this->visitsByDayChart['dayData'] as $value){echo $value;}?>]
             },
             options: {
                 scales: {
