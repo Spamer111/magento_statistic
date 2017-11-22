@@ -1,10 +1,39 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-<!--
-    <adminhtml_page_index>
-        <reference name="content">
-            <block type="adminhtml/pages" name="pages" template="pages/pages.phtml" />
+    <!--
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <script>select.css</script>
+                <params>defer</params>
+            </action>
         </reference>
-    </adminhtml_page_index>
--->
+    </default>-->
+
+    <!--<default>
+     <reference name="head">
+      <action method="setText">
+           <text>
+
+               <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+           </text>
+      </action>
+     </reference>
+    </default>-->
+   <!--
+       <default>
+        <reference name="head">
+         <action method="addCss">
+          <script>select2.min.css</script>
+          <params>defer</params>
+         </action>
+        </reference>
+           <reference name="head">
+               <action method="addJs">
+                   <script>my_statistic/select2.min.js</script>
+                   <params>defer="defer"</params>
+               </action>
+           </reference>
+       </default> -->
 </layout>
