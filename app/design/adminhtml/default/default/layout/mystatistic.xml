@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
-
-    <reference name="content">
-        <block type="core/template" name="blockname" template="template.phtml" />
-    </reference>
-
+<!--
+    <adminhtml_page_index>
+        <reference name="content">
+            <block type="adminhtml/pages" name="pages" template="pages/pages.phtml" />
+        </reference>
+    </adminhtml_page_index>
+-->
 </layout>

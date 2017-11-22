@@ -200,6 +200,7 @@ class My_Statistic_Block_Adminhtml_Pages extends Mage_Adminhtml_Block_Template{
         $this->visitsByDayChart = $this->chartVisitsByDay($collection);
         $this->period = $this->visitsForPeriod($collection);
         $this->generalStatistics = $this->statistics($collection);
+        
         $this->setTemplate('pages/pages.phtml'); //грузим темплейт (контент который выводим) из design/adminhtml/default/default/template/pages/test.phtml
     }
 

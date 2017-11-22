@@ -1,6 +1,6 @@
 <?php
-include(Mage::getBaseDir('media') . '/my_statistic/SxGeo.php');
-require_once(Mage::getBaseDir('media') . '/my_statistic/BrowserDetection.php');
+include(Mage::getBaseDir('lib') . '/my_statistic/SxGeo.php');
+require_once(Mage::getBaseDir('lib') . '/my_statistic/BrowserDetection.php');
 
 class My_Statistic_Model_Visits extends Mage_Core_Model_Abstract
 {
@@ -13,11 +13,12 @@ class My_Statistic_Model_Visits extends Mage_Core_Model_Abstract
 
     public function controller_action_predispatch($observer)
     {
-        $curdate = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-        $nextday = mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"));
-        setcookie("lastvisit", $curdate, $nextday);
-        if (!isset($_COOKIE[lastvisit])) {
-            $SxGeo = new SxGeo(Mage::getBaseDir('media') . '/my_statistic/SxGeoCity.dat'); // поправить на правильный путь
+        $value = Mage::getModel('core/date')->date('H:i:s');
+        $period = Mage::getModel('core/cookie')->getLifetime()*12;
+        Mage::getModel('core/cookie')->set("lastVisit", $value, $period);
+
+        if(array_key_exists('lastVisit',Mage::getModel('core/cookie')->get())){
+            $SxGeo = new SxGeo(Mage::getBaseDir('lib') . '/my_statistic/SxGeoCity.dat'); // поправить на правильный путь
             $browser = new BrowserDetection();
             $ip = $_SERVER['REMOTE_ADDR'];
             $CityFull = $SxGeo->getCityFull($ip);
@@ -41,7 +42,7 @@ class My_Statistic_Model_Visits extends Mage_Core_Model_Abstract
                 $customer = Mage::getModel('customer/session');
                 $visitor->setUserid($customer->getCustomer()->getID())->save();
             }
-            setcookie("visitor_id", $visitor->getID()); // записываем в куку ID посетителя
+            Mage::getModel('core/cookie')->set(visitor_id, $visitor->getID());// записываем в куку ID посетителя
 
 
             $ipaddress = Mage::getModel('statistic/ipaddresses');
