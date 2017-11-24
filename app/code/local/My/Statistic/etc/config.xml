@@ -11,33 +11,32 @@
                 <class>My_Statistic_Block</class>
             </statistic>
         </blocks>
-        <!-- Тут будут модели, блоки, хелперы, реврайты, глобальные обсерверы -->
         <models>
-            <statistic> <!-- Как правило тут namespace_modulename или просто modulename -->
+            <statistic>
                 <class>My_Statistic_Model</class>
                 <resourceModel>statistic_resource</resourceModel>
             </statistic>
             <statistic_resource>
                 <class>My_Statistic_Model_Resource</class>
                 <entities>
-                    <visits> <!-- наименование модели -->
-                        <table>my_stats_visits</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    <visits>
+                        <table>my_stats_visits</table>
                     </visits>
 
-                    <country> <!-- наименование модели -->
-                        <table>my_stats_country</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    <country>
+                        <table>my_stats_country</table>
                     </country>
 
-                    <ipaddresses> <!-- наименование модели -->
-                        <table>my_stats_ipaddresses</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    <ipaddresses>
+                        <table>my_stats_ipaddresses</table>
                     </ipaddresses>
 
-                    <pages> <!-- наименование модели -->
-                        <table>my_stats_pages</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    <pages>
+                        <table>my_stats_pages</table>
                     </pages>
 
-                    <pagevisit> <!-- наименование модели -->
-                        <table>my_stats_page_visit</table> <!-- название таблицы к которой будет "привязана" модель -->
+                    <pagevisit>
+                        <table>my_stats_page_visit</table>
                     </pagevisit>
 
                 </entities>
@@ -45,7 +44,7 @@
         </models>
 
         <resources>
-            <statistic_setup> <!-- именно в папку с таким названием нужно складывать install и upgrade скрипты -->
+            <statistic_setup>
                 <setup>
                     <module>My_Statistic</module>
                 </setup>
@@ -62,12 +61,11 @@
 
     <frontend>
         <events>
-            <controller_action_predispatch><!--Событие -->
+            <controller_action_predispatch>
                 <observers>
-                    <!--Перечисляем слушателей-->
                     <visitor><!--Произвольное название слушателя-->
                         <class>statistic/visits</class><!--Класс /Model/observer-->
-                        <method>controller_action_predispatch</method> <!--Метод который будет вызываться в обсервере при событии, описан в классе-->
+                        <method>controllerActionPredispatch</method> <!--Метод который будет вызываться в обсервере при событии, описан в классе-->
                         <type>singleton</type>
                     </visitor>
                 </observers>
@@ -75,22 +73,20 @@
 
             <controller_front_send_response_after>
                 <observers>
-                    <page_visits><!--Произвольное название слушателя-->
-                        <class>statistic/pages</class><!--Класс /Model/observer-->
-                        <method>controller_front_send_response_after</method> <!--Метод который будет вызываться в обсервере при событии, описан в классе-->
+                    <page_visits>
+                        <class>statistic/pages</class>
+                        <method>controllerFrontSendResponseAfter</method>
                         <type>singleton</type>
                     </page_visits>
                 </observers>
             </controller_front_send_response_after>
         </events>
-        <!-- Все касательно frontend части магазина: роуты, макеты, переводы, обсерверы -->
-
         <routers>
             <statistic>
                 <use>standard</use>
                 <args>
                     <module>My_Statistic</module>
-                    <frontName>statistic</frontName><!-- любое название, не конфликтуйте с существующими роутерами -->
+                    <frontName>statistic</frontName>
                 </args>
             </statistic>
         </routers>
@@ -116,11 +112,11 @@
                 </statistic>
             </updates>
         </layout>
-        <!-- Все касательно admin части магазина:  макеты, переводы, обсерверы -->
+
     </adminhtml>
 
     <default>
-        <!-- Все касательно admin части магазина:  макеты, переводы, обсерверы -->
+
     <statistic>
         <settings>
             <enabled>1</enabled>

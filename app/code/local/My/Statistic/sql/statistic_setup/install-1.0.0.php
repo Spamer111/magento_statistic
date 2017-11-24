@@ -1,6 +1,4 @@
 <?php
-// название папки в которой лежит этот файл береться из конфигурациионого файла etc/config.xml
-// cсекция <resources><siteblocks_setup - так должна называться папка>
 
 /** @var Mage_Core_Model_Resource_Setup $installer*/
 $installer =$this;
@@ -57,7 +55,7 @@ $installer->run("
       `useragent` varchar(255) default NULL, /*вся строка*/
       `system` varchar(50) NOT NULL default '-', /*ОС*/
       `browser` varchar(50) NOT NULL default '-', /*браузер*/
-       PRIMARY KEY (id)
+       PRIMARY KEY (id),
     ) 
     ENGINE=InnoDB CHARSET=utf8 COLLATE utf8_unicode_ci;
     ");

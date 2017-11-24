@@ -8,7 +8,7 @@
                         <children>
                             <config>
                                 <children>
-                                    <statistic >
+                                    <statistic>
                                         <title>Statistic</title>
                                     </statistic>
                                 </children>
@@ -48,14 +48,14 @@
             <title>My_Statistic</title>
             <sort_order>70</sort_order>
             <children>
-                <statistics_of_visitors><!-- название ставим свое-->
-                    <title>Statistics of visitors</title><!-- название ставим свое-->
-                    <action>adminhtml/visitors</action> <!-- контроллер ставим свой-->
+                <statistics_of_visitors>
+                    <title>Statistics of visitors</title>
+                    <action>adminhtml/visitors</action>
                     <sort_order>0</sort_order>
                 </statistics_of_visitors>
                 <visual_statistics>
                     <title>Visual statistics</title>
-                    <action>adminhtml/pages</action><!-- контроллер ставим свой-->
+                    <action>adminhtml/pages</action>
                     <sort_order>10</sort_order>
                 </visual_statistics>
             </children>
